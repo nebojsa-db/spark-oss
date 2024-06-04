@@ -75,7 +75,7 @@ statement
     | executeImmediate                                                 #visitExecuteImmediate
     | ctes? dmlStatementNoWith                                         #dmlStatement
     | USE identifierReference                                          #use
-    | USE namespace identifierReference                                #useNamespace
+    | USE namespace (identifierReference | stringLit)                                #useNamespace
     | SET CATALOG (errorCapturingIdentifier | stringLit)                  #setCatalog
     | CREATE namespace (IF errorCapturingNot EXISTS)? identifierReference
         (commentSpec |

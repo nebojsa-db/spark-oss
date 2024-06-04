@@ -273,7 +273,12 @@ class SparkSqlAstBuilder extends AstBuilder {
    * Create a [[SetNamespaceCommand]] logical command.
    */
   override def visitUseNamespace(ctx: UseNamespaceContext): LogicalPlan = withOrigin(ctx) {
-    withIdentClause(ctx.identifierReference, SetNamespaceCommand(_))
+    if (ctx.identifierReference() != null) {
+      withIdentClause(ctx.identifierReference, SetNamespaceCommand(_))
+    }
+    else {
+      SetNamespaceCommand(Seq(string(visitStringLit(ctx.stringLit()))))
+    }
   }
 
   /**
